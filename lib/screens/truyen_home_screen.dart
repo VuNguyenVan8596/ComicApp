@@ -10,7 +10,7 @@ class TruyenHomeState extends State {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-        title: 'Net Truyen',
+        title: 'Lens Comic',
         theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
