@@ -48,11 +48,12 @@ List<TruyenDeCu> fakeDatTruyenDeCu = [
           'http://st.imageinstant.net/data/comics/26/quan-chua-vung-vang-thiet-lap-nhan-vat-k-1584.jpg',
       name: 'Quận Chúa Vững Vàng, Thiết Lập Nhân Vật Không Thể Vỡ',
       chapter: 'Chapter 60',
-      timePublish: '05:41 20/05'),
-  TruyenDeCu(
-      urlImage:
-          'http://st.imageinstant.net/data/comics/182/co-vo-hop-dong-bo-tron-cua-tong-giam-doc-2344.jpg',
-      name: 'Cô Vợ Hợp Đồng Bỏ Trốn Của Tổng Giám Đốc',
-      chapter: 'Chapter 354.2',
-      timePublish: '1 ngày trước')
+      timePublish: '05:41 20/05')
+  //,
+  // TruyenDeCu(
+  //     urlImage:
+  //         'http://st.imageinstant.net/data/comics/182/co-vo-hop-dong-bo-tron-cua-tong-giam-doc-2344.jpg',
+  //     name: 'Cô Vợ Hợp Đồng Bỏ Trốn Của Tổng Giám Đốc',
+  //     chapter: 'Chapter 354.2',
+  //     timePublish: '1 ngày trước')
 ];

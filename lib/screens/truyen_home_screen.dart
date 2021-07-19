@@ -1,4 +1,5 @@
 import 'package:CoraEnglish/widgets/truyen_de_cu_widget.dart';
+import 'package:CoraEnglish/widgets/truyen_doc_nhieu_widget.dart';
 import 'package:flutter/material.dart';
 
 class TruyenHomeScreen extends StatefulWidget {
@@ -32,8 +33,9 @@ class TruyenHomeState extends State {
                 )
               ],
             ),
-            body: Column(
-              children: [TruyenDeCuWidget()],
-            )));
+            body: SingleChildScrollView(
+                child: Column(
+              children: [TruyenDeCuWidget(), TruyenDocNhieuWidget()],
+            ))));
   }
 }
