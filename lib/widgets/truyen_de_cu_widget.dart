@@ -29,7 +29,7 @@ class TruyenDeCuState extends State {
     print(lstTruyenDecu.length);
     print(item);
     if (op == '+') {
-      if (item > lstTruyenDecu.length - 3) {
+      if (item > lstTruyenDecu.length - 2) {
         setState(() {
           item = 0;
         });
