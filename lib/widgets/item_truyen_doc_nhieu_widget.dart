@@ -57,7 +57,7 @@ class ItemTruyenDocNhieuWidget extends StatelessWidget {
                             Text(truyenDocNhieu.chapter),
                             Row(
                               children: [
-                                Icon(Icons.panorama_fish_eye,
+                                Icon(Icons.remove_red_eye,
                                     size: 13, color: Colors.black),
                                 Text(' ' + truyenDocNhieu.viewer,
                                     style: TextStyle(

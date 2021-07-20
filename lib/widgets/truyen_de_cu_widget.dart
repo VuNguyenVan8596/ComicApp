@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:CoraEnglish/models/truyen_de_cu.dart';
 import 'package:CoraEnglish/widgets/item_truyen_de_cu_widget.dart';
 import 'package:flutter/material.dart';
@@ -9,9 +11,21 @@ class TruyenDeCuWidget extends StatefulWidget {
 
 class TruyenDeCuState extends State {
   final List<TruyenDeCu> lstTruyenDecu = fakeDatTruyenDeCu;
-  final ScrollController _scrollController = ScrollController();
+  final ScrollController _scrollController =
+      ScrollController(initialScrollOffset: 1000);
   int item;
   double scrolAbleWidth;
+  Timer timer;
+
+  startTimer() {
+    timer = Timer.periodic(Duration(seconds: 10), (timer) {
+      jumpToItem('+');
+    });
+  }
+
+  cancelTimer() {
+    timer.cancel();
+  }
 
   @override
   void initState() {
@@ -20,16 +34,21 @@ class TruyenDeCuState extends State {
     scrolAbleWidth = -1000;
   }
 
-  void jumpToItem(String op) {
+  void jumpToItem([String op, bool isAuto = true]) {
+    if (!isAuto) {
+      cancelTimer();
+    }
+
     if (this.scrolAbleWidth == -1000) //chưa dược init
     {
-      //Số này chưa tìm ra nhưng mò được cái số này chắc phải tìm hiểu thêm
-      this.scrolAbleWidth = 737.28;
+      this.scrolAbleWidth =
+          (context.size.width * 0.94 / 2 + context.size.width * 0.01) *
+              (lstTruyenDecu.length - 2);
     }
-    print(lstTruyenDecu.length);
-    print(item);
+    // print(lstTruyenDecu.length);
+    // print(item);
     if (op == '+') {
-      if (item > lstTruyenDecu.length - 3) {
+      if (item > lstTruyenDecu.length - 1) {
         setState(() {
           item = 0;
         });
@@ -39,7 +58,7 @@ class TruyenDeCuState extends State {
         });
       }
     } else {
-      if (item < 2) {
+      if (item <= 0) {
         setState(() {
           item = 0;
         });
@@ -50,20 +69,23 @@ class TruyenDeCuState extends State {
       }
     }
 
-    double jum = scrolAbleWidth -
+    double jum = this.scrolAbleWidth -
         item * (context.size.width * 0.94 / 2 + context.size.width * 0.01);
+
     _scrollController.animateTo(
       jum,
       curve: Curves.easeOut,
-      duration: const Duration(milliseconds: 500),
+      duration: Duration(milliseconds: 500),
     );
+
+    if (!timer.isActive) {
+      Future.delayed(Duration(seconds: 1), () => startTimer());
+    }
   }
 
   @override
   Widget build(BuildContext context) {
-    // Timer.periodic(new Duration(seconds: 5), (timer) {
-    //   jumpToItem('+');
-    // });
+    startTimer();
     return Container(
       height: 170,
       width: MediaQuery.of(context).size.width,
@@ -122,7 +144,7 @@ class TruyenDeCuState extends State {
                           ),
                         ),
                         onTap: () {
-                          jumpToItem('-');
+                          jumpToItem('-', false);
                         },
                       ),
                       GestureDetector(
@@ -140,7 +162,7 @@ class TruyenDeCuState extends State {
                           ),
                         ),
                         onTap: () {
-                          jumpToItem('+');
+                          jumpToItem('+', false);
                         },
                       )
                     ],
