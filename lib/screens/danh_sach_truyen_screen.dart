@@ -31,8 +31,6 @@ class DanhSachTruyenScreen extends StatelessWidget {
         width: MediaQuery.of(context).size.width,
         height: MediaQuery.of(context).size.height,
         child: GridView.count(
-            // shrinkWrap: true,
-            //physics: NeverScrollableScrollPhysics(),
             crossAxisSpacing: 10,
             mainAxisSpacing: 10,
             childAspectRatio: 3 / 4,

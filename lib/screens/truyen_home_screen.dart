@@ -17,7 +17,6 @@ class TruyenHomeState extends State {
 
   TextEditingController textTimTruyenController = new TextEditingController();
   FocusNode focusNodeTextTimTruyen = FocusNode();
-  // This widget is the root of your application.
 
   @override
   void dispose() {
