@@ -40,14 +40,6 @@ class TruyenHomeState extends State {
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
         ),
-        // initialRoute: '/home',
-        // routes: {
-        //   // When navigating to the "/" route, build the FirstScreen widget.
-        //   '/home': (context) => TruyenHomeScreen(),
-        //   // When navigating to the "/second" route, build the SecondScreen widget.
-        //   '/detail': (context) => TruyenDetailScreen(),
-        //   '/main': (context) => TruyenMainScreen(indexCurrent: indexCurrent)(),
-        // },
         home: Scaffold(
             key: _key,
             endDrawer: Drawer(
