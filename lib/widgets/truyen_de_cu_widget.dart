@@ -11,81 +11,48 @@ class TruyenDeCuWidget extends StatefulWidget {
 
 class TruyenDeCuState extends State {
   final List<TruyenDeCu> lstTruyenDecu = fakeDatTruyenDeCu;
-  final ScrollController _scrollController =
-      ScrollController(initialScrollOffset: 1000);
+  final ScrollController _scrollController = ScrollController();
   int item;
   double scrolAbleWidth;
   Timer timer;
-
-  startTimer() {
-    timer = Timer.periodic(Duration(seconds: 10), (timer) {
-      jumpToItem('+');
-    });
-  }
-
-  cancelTimer() {
-    timer.cancel();
-  }
-
+  double widthScreen;
   @override
   void initState() {
     super.initState();
     item = 0;
-    scrolAbleWidth = -1000;
+    //widthScreen = context.size.width;
   }
 
-  void jumpToItem([String op, bool isAuto = true]) {
-    if (!isAuto) {
-      cancelTimer();
-    }
-
-    if (this.scrolAbleWidth == -1000) //chưa dược init
-    {
-      this.scrolAbleWidth =
-          (context.size.width * 0.94 / 2 + context.size.width * 0.01) *
-              (lstTruyenDecu.length - 2);
-    }
-    // print(lstTruyenDecu.length);
-    // print(item);
+  void jumpToItem([String op = '', bool isAuto = true]) {
     if (op == '+') {
-      if (item > lstTruyenDecu.length - 1) {
-        setState(() {
-          item = 0;
-        });
+      if (item > lstTruyenDecu.length - 3) {
+        item = 0;
       } else {
-        setState(() {
-          item += 1;
-        });
+        item += 1;
       }
     } else {
       if (item <= 0) {
-        setState(() {
-          item = 0;
-        });
+        item = 0;
       } else {
-        setState(() {
-          item -= 1;
-        });
+        item -= 1;
       }
     }
 
-    double jum = this.scrolAbleWidth -
-        item * (context.size.width * 0.94 / 2 + context.size.width * 0.01);
+    double jum = item * (widthScreen * 0.94 / 2 + widthScreen * 0.01);
 
     _scrollController.animateTo(
       jum,
       curve: Curves.easeOut,
       duration: Duration(milliseconds: 500),
     );
-
-    if (!timer.isActive) {
-      Future.delayed(Duration(seconds: 1), () => startTimer());
-    }
   }
 
   @override
   Widget build(BuildContext context) {
-    startTimer();
+    widthScreen = MediaQuery.of(context).size.width;
+    Timer.periodic(new Duration(seconds: 10), (timer) {
+      jumpToItem('+');
+    });
     return Container(
       height: 170,
       width: MediaQuery.of(context).size.width,
@@ -109,7 +76,7 @@ class TruyenDeCuState extends State {
                         decoration: BoxDecoration(color: Colors.white),
                         width: MediaQuery.of(context).size.width * 0.95,
                         child: ListView.separated(
-                            reverse: true,
+                            reverse: false,
                             controller: _scrollController,
                             physics: NeverScrollableScrollPhysics(),
                             separatorBuilder: (context, index) {

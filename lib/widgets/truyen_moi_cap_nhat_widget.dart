@@ -7,7 +7,15 @@ class TruyenMoiCapNhatWidget extends StatefulWidget {
 
 class TruyenMoiCapNhatState extends State {
   @override
+  void initState() {
+    super.initState();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    final itemWidth = (MediaQuery.of(context).size.width - 30) / 2;
+    final itemHeight = (itemWidth * 4) / 3;
+
     return Column(
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -25,13 +33,9 @@ class TruyenMoiCapNhatState extends State {
         Container(
             width: double.infinity,
             margin: EdgeInsets.only(left: 10, right: 10),
-            // padding: EdgeInsets.only(top: 10, bottom: 10),
-            height: 1220,
-            decoration: BoxDecoration(
-                //color: Colors.grey,
-                ),
+            height: itemHeight * 5 + 4 * 10,
             child: GridView.count(
-                shrinkWrap: true,
+                // shrinkWrap: true,
                 physics: NeverScrollableScrollPhysics(),
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 10,
