@@ -1,6 +1,8 @@
 import 'dart:async';
 
 import 'package:CoraEnglish/models/truyen_de_cu.dart';
+import 'package:CoraEnglish/models/truyen_de_cu_model.dart';
+import 'package:CoraEnglish/services/apiclient.dart';
 import 'package:CoraEnglish/widgets/item_truyen_de_cu_widget.dart';
 import 'package:flutter/material.dart';
 
@@ -12,15 +14,18 @@ class TruyenDeCuWidget extends StatefulWidget {
 class TruyenDeCuState extends State {
   final List<TruyenDeCu> lstTruyenDecu = fakeDatTruyenDeCu;
   final ScrollController _scrollController = ScrollController();
+
+  Future<TruyenDeCuResponse> _truyenDeCuResponse;
+
   int item;
   double scrolAbleWidth;
   Timer timer;
   double widthScreen;
   @override
   void initState() {
+    _truyenDeCuResponse = ApiClient().getTruyenDeCu();
     super.initState();
     item = 0;
-    //widthScreen = context.size.width;
   }
 
   void jumpToItem([String op = '', bool isAuto = true]) {
@@ -75,19 +80,32 @@ class TruyenDeCuState extends State {
                     child: Container(
                         decoration: BoxDecoration(color: Colors.white),
                         width: MediaQuery.of(context).size.width * 0.95,
-                        child: ListView.separated(
-                            reverse: false,
-                            controller: _scrollController,
-                            physics: NeverScrollableScrollPhysics(),
-                            separatorBuilder: (context, index) {
-                              return SizedBox(
-                                width: MediaQuery.of(context).size.width * 0.01,
-                              );
-                            },
-                            scrollDirection: Axis.horizontal,
-                            itemCount: lstTruyenDecu.length,
-                            itemBuilder: (context, index) {
-                              return ItemTruyenDeCuWidget(lstTruyenDecu[index]);
+                        child: FutureBuilder<TruyenDeCuResponse>(
+                            future: _truyenDeCuResponse,
+                            builder: (context, snapshot) {
+                              if (snapshot.hasData) {
+                                return ListView.separated(
+                                    reverse: false,
+                                    controller: _scrollController,
+                                    physics: NeverScrollableScrollPhysics(),
+                                    separatorBuilder: (context, index) {
+                                      return SizedBox(
+                                        width:
+                                            MediaQuery.of(context).size.width *
+                                                0.01,
+                                      );
+                                    },
+                                    scrollDirection: Axis.horizontal,
+                                    itemCount: snapshot.data.data.length,
+                                    itemBuilder: (context, index) {
+                                      return ItemTruyenDeCuWidget(
+                                          snapshot.data.data[index]);
+                                    });
+                              } else {
+                                return Center(
+                                  child: CircularProgressIndicator(),
+                                );
+                              }
                             }))),
                 Center(
                     child: Padding(

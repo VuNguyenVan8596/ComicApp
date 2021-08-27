@@ -1,7 +1,32 @@
+import 'package:CoraEnglish/models/truyen_model.dart';
 import 'package:CoraEnglish/screens/truyen_detail_screen.dart';
 import 'package:flutter/material.dart';
 
 class ItemTruyenMoiCapNhatWidget extends StatelessWidget {
+  final TruyenModel truyenModel;
+
+  ItemTruyenMoiCapNhatWidget({this.truyenModel});
+
+  List<Widget> renderChapterAndTimeOfTruyen(List<TruyenDetailMode> details) {
+    List<Widget> rslt = [];
+    int length = details.length > 3 ? 3 : details.length;
+    for (int i = 0; i < length; i++) {
+      rslt.add(Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(details[i].chapter,
+              style: TextStyle(fontSize: 11, color: Colors.black)),
+          Text(details[i].timer,
+              style: TextStyle(
+                  fontSize: 11,
+                  color: Colors.grey,
+                  fontStyle: FontStyle.italic))
+        ],
+      ));
+    }
+    return rslt;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -25,8 +50,7 @@ class ItemTruyenMoiCapNhatWidget extends StatelessWidget {
                       Container(
                         decoration: BoxDecoration(
                           image: DecorationImage(
-                              image: NetworkImage(
-                                  'http://st.imageinstant.net/data/comics/46/sengoku-komachi-kurou-tan.jpg'),
+                              image: NetworkImage(truyenModel.urlImg),
                               fit: BoxFit.cover),
                           borderRadius: BorderRadius.only(
                               topLeft: Radius.circular(10),
@@ -52,7 +76,7 @@ class ItemTruyenMoiCapNhatWidget extends StatelessWidget {
                                   size: 10,
                                 ),
                                 Text(
-                                  '486.000',
+                                  truyenModel.view,
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 10),
                                 ),
@@ -62,14 +86,14 @@ class ItemTruyenMoiCapNhatWidget extends StatelessWidget {
                                   size: 10,
                                 ),
                                 Text(
-                                  '486.000',
+                                  truyenModel.comment,
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 10),
                                 ),
                                 Icon(Icons.hearing,
                                     color: Colors.white, size: 10),
                                 Text(
-                                  '486.000',
+                                  truyenModel.heart,
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 10),
                                 )
@@ -83,60 +107,37 @@ class ItemTruyenMoiCapNhatWidget extends StatelessWidget {
                   child: Padding(
                       padding: EdgeInsets.symmetric(horizontal: 5),
                       child: Column(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          RichText(
-                            softWrap: false,
-                            maxLines: 1,
-                            textAlign: TextAlign.center,
-                            overflow: TextOverflow.fade,
-                            text: TextSpan(
-                                text: 'Sengoku Komachi Kurou Tan!',
-                                style: TextStyle(
-                                    fontSize: 12,
-                                    color: Colors.black,
-                                    fontWeight: FontWeight.bold)),
+                          Expanded(
+                            child: Container(
+                                alignment: Alignment.centerLeft,
+                                child: RichText(
+                                  softWrap: false,
+                                  maxLines: 1,
+                                  textAlign: TextAlign.center,
+                                  overflow: TextOverflow.fade,
+                                  text: TextSpan(
+                                      text: truyenModel.tenTruyen,
+                                      style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black,
+                                          fontWeight: FontWeight.bold)),
+                                )),
+                            flex: 3,
                           ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('Chapter 123',
-                                  style: TextStyle(
-                                      fontSize: 11, color: Colors.black)),
-                              Text('3 Giờ trước',
-                                  style: TextStyle(
-                                      fontSize: 11,
-                                      color: Colors.grey,
-                                      fontStyle: FontStyle.italic))
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('Chapter 123',
-                                  style: TextStyle(
-                                      fontSize: 11, color: Colors.black)),
-                              Text('3 Giờ trước',
-                                  style: TextStyle(
-                                      fontSize: 11,
-                                      color: Colors.grey,
-                                      fontStyle: FontStyle.italic))
-                            ],
-                          ),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Text('Chapter 123',
-                                  style: TextStyle(
-                                      fontSize: 11, color: Colors.black)),
-                              Text('3 Giờ trước',
-                                  style: TextStyle(
-                                      fontSize: 11,
-                                      color: Colors.grey,
-                                      fontStyle: FontStyle.italic))
-                            ],
-                          )
+                          Expanded(
+                              child: Padding(
+                                  padding: EdgeInsets.only(bottom: 5),
+                                  child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.spaceBetween,
+                                      children: renderChapterAndTimeOfTruyen(
+                                          truyenModel.details))),
+                              flex: 6)
                         ],
                       )))
             ],

@@ -1,11 +1,12 @@
-import 'package:CoraEnglish/models/truyen_doc_nhieu.dart';
+import 'package:CoraEnglish/models/truyen_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class ItemTruyenDocNhieuWidget extends StatelessWidget {
-  final TruyenDocNhieu truyenDocNhieu;
+  final TruyenModel truyenModel;
   final int index;
-  ItemTruyenDocNhieuWidget({this.truyenDocNhieu, this.index});
+  ItemTruyenDocNhieuWidget({this.index, this.truyenModel});
+
   @override
   Widget build(BuildContext context) {
     return Container(
@@ -18,9 +19,15 @@ class ItemTruyenDocNhieuWidget extends StatelessWidget {
                 flex: 1,
                 child: Center(
                     child: Text(
-                  '0' + truyenDocNhieu.stt.toString(),
+                  '0' + (index + 1).toString(),
                   style: TextStyle(
-                      color: truyenDocNhieu.color,
+                      color: index == 0
+                          ? Color.fromRGBO(52, 152, 219, 1)
+                          : (index == 1
+                              ? Color.fromRGBO(39, 174, 96, 1)
+                              : (index == 2
+                                  ? Color.fromRGBO(211, 84, 0, 1)
+                                  : Colors.black)),
                       fontSize: 20,
                       fontWeight: FontWeight.bold),
                 ))),
@@ -30,7 +37,7 @@ class ItemTruyenDocNhieuWidget extends StatelessWidget {
                   height: double.infinity,
                   decoration: BoxDecoration(
                       image: DecorationImage(
-                          image: NetworkImage(truyenDocNhieu.urlImage),
+                          image: NetworkImage(truyenModel.urlImg),
                           fit: BoxFit.cover))),
             ),
             Expanded(
@@ -47,19 +54,19 @@ class ItemTruyenDocNhieuWidget extends StatelessWidget {
                           textAlign: TextAlign.center,
                           overflow: TextOverflow.fade,
                           text: TextSpan(
-                              text: truyenDocNhieu.name,
+                              text: truyenModel.tenTruyen,
                               style:
                                   TextStyle(fontSize: 13, color: Colors.black)),
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(truyenDocNhieu.chapter),
+                            Text(truyenModel.details.last.chapter),
                             Row(
                               children: [
                                 Icon(Icons.remove_red_eye,
                                     size: 13, color: Colors.black),
-                                Text(' ' + truyenDocNhieu.viewer,
+                                Text(' ' + truyenModel.view,
                                     style: TextStyle(
                                         color: Colors.black,
                                         fontStyle: FontStyle.italic))

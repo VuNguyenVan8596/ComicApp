@@ -1,8 +1,8 @@
-import 'package:CoraEnglish/models/truyen_de_cu.dart';
+import 'package:CoraEnglish/models/truyen_de_cu_model.dart';
 import 'package:flutter/material.dart';
 
 class ItemTruyenDeCuWidget extends StatelessWidget {
-  final TruyenDeCu _truyenDeCu;
+  final TruyenDeCuModel _truyenDeCu;
   ItemTruyenDeCuWidget(this._truyenDeCu);
   @override
   Widget build(BuildContext context) {
@@ -15,7 +15,7 @@ class ItemTruyenDeCuWidget extends StatelessWidget {
               decoration: BoxDecoration(
                 image: DecorationImage(
                   fit: BoxFit.cover,
-                  image: NetworkImage('${_truyenDeCu.urlImage}'),
+                  image: NetworkImage('${_truyenDeCu.urlImg}'),
                 ),
               ),
             ),
@@ -37,13 +37,13 @@ class ItemTruyenDeCuWidget extends StatelessWidget {
                             textAlign: TextAlign.center,
                             overflow: TextOverflow.fade,
                             text: TextSpan(
-                                text: '${_truyenDeCu.name}',
+                                text: '${_truyenDeCu.tenTruyen}',
                                 style: TextStyle(fontSize: 13)),
                           ),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
-                              Text('${_truyenDeCu.chapter}',
+                              Text('${_truyenDeCu.tapTruyen}',
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 11)),
                               Container(
@@ -51,7 +51,7 @@ class ItemTruyenDeCuWidget extends StatelessWidget {
                                   children: [
                                     Icon(Icons.timer,
                                         size: 13, color: Colors.white),
-                                    Text(' ${_truyenDeCu.timePublish}',
+                                    Text(' ${_truyenDeCu.thoiGian}',
                                         style: TextStyle(
                                             color: Colors.white, fontSize: 11))
                                   ],
