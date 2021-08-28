@@ -112,7 +112,9 @@ class TruyenHomeState extends State {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 DanhSachTruyenScreen(
-                                                    'Truyện Hot')),
+                                                  title: 'Truyện Hot',
+                                                  type: 3,
+                                                )),
                                       );
                                     },
                                   ),
@@ -126,7 +128,9 @@ class TruyenHomeState extends State {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 DanhSachTruyenScreen(
-                                                    'Truyện Đang Theo Dõi')),
+                                                    title:
+                                                        'Truyện Đang Theo Dõi',
+                                                    type: 3)),
                                       );
                                     },
                                   ),
@@ -139,7 +143,8 @@ class TruyenHomeState extends State {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 DanhSachTruyenScreen(
-                                                    'Truyện Đã Đọc')),
+                                                    title: 'Truyện Đã Đọc',
+                                                    type: 3)),
                                       );
                                     },
                                   ),
@@ -206,15 +211,45 @@ class TruyenHomeState extends State {
                                         ListTile(
                                             title: Text("TOP THÁNG",
                                                 style: TextStyle(
-                                                    color: Colors.white))),
+                                                    color: Colors.white)),
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        DanhSachTruyenScreen(
+                                                            title: 'Top Tháng',
+                                                            type: 11)),
+                                              );
+                                            }),
                                         ListTile(
                                             title: Text("TOP TUẦN",
                                                 style: TextStyle(
-                                                    color: Colors.white))),
+                                                    color: Colors.white)),
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        DanhSachTruyenScreen(
+                                                            title: 'Top Tuần',
+                                                            type: 12)),
+                                              );
+                                            }),
                                         ListTile(
                                             title: Text("TOP NGÀY",
                                                 style: TextStyle(
-                                                    color: Colors.white)))
+                                                    color: Colors.white)),
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        DanhSachTruyenScreen(
+                                                            title: 'Top Ngày',
+                                                            type: 13)),
+                                              );
+                                            })
                                       ]),
                                   ListTile(
                                     title: Text('CON GÁI',
@@ -225,7 +260,8 @@ class TruyenHomeState extends State {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 DanhSachTruyenScreen(
-                                                    'Truyện Con Gái')),
+                                                    title: 'Truyện Con Gái',
+                                                    type: 1)),
                                       );
                                     },
                                   ),
@@ -238,22 +274,9 @@ class TruyenHomeState extends State {
                                         MaterialPageRoute(
                                             builder: (context) =>
                                                 DanhSachTruyenScreen(
-                                                    'Truyện Con Trai')),
-                                      );
-                                    },
-                                  ),
-                                  ListTile(
-                                    title: Text('ĐĂNG NHẬP',
-                                        style: TextStyle(
-                                            color: Color.fromRGBO(
-                                                208, 179, 46, 1))),
-                                    onTap: () {
-                                      Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                            builder: (context) =>
-                                                DanhSachTruyenScreen(
-                                                    'Truyện Con Trai')),
+                                                  title: 'Truyện Con Trai',
+                                                  type: 2,
+                                                )),
                                       );
                                     },
                                   )

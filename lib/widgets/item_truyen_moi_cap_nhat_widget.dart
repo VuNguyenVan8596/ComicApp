@@ -1,6 +1,7 @@
 import 'package:CoraEnglish/models/truyen_model.dart';
 import 'package:CoraEnglish/screens/truyen_detail_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 
 class ItemTruyenMoiCapNhatWidget extends StatelessWidget {
   final TruyenModel truyenModel;
@@ -38,7 +39,9 @@ class ItemTruyenMoiCapNhatWidget extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => TruyenDetailScreen()),
+              MaterialPageRoute(
+                  builder: (context) =>
+                      TruyenDetailScreen(truyenModel.urlTruyen)),
             );
           },
           child: Column(
@@ -90,8 +93,10 @@ class ItemTruyenMoiCapNhatWidget extends StatelessWidget {
                                   style: TextStyle(
                                       color: Colors.white, fontSize: 10),
                                 ),
-                                Icon(Icons.hearing,
+                                FaIcon(FontAwesomeIcons.heart,
                                     color: Colors.white, size: 10),
+                                // Icon(Icons.hearing,
+                                //     color: Colors.white, size: 10),
                                 Text(
                                   truyenModel.heart,
                                   style: TextStyle(

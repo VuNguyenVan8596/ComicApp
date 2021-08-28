@@ -1,6 +1,6 @@
 import 'dart:convert';
-
 import 'package:CoraEnglish/models/truyen_de_cu_model.dart';
+import 'package:CoraEnglish/models/truyen_detail.dart';
 import 'package:CoraEnglish/models/truyen_model.dart';
 import 'package:CoraEnglish/services/config.dart';
 import 'package:http/http.dart' as http;
@@ -10,8 +10,8 @@ class ApiClient {
     var client = http.Client();
     var url = Uri.parse(Config.urlBase + 'api/comic/decu');
     TruyenDeCuResponse truyenDeCuResponse = TruyenDeCuResponse(
-        errorCode: Config.ErrorCodeCallAPIFail,
-        errorMsg: Config.MsgCallAPIFail);
+        errorCode: Config.errorCodeCallAPIFail,
+        errorMsg: Config.msgCallAPIFail);
     try {
       var response = await client.get(url);
       if (response.statusCode == 200) {
@@ -27,8 +27,8 @@ class ApiClient {
     var client = http.Client();
     var url = Uri.parse(Config.urlBase + 'api/comic/moicapnhat');
     TruyenResponse truyenResponse = TruyenResponse(
-        errorCode: Config.ErrorCodeCallAPIFail,
-        errorMsg: Config.MsgCallAPIFail);
+        errorCode: Config.errorCodeCallAPIFail,
+        errorMsg: Config.msgCallAPIFail);
     try {
       var response = await client.get(url);
       if (response.statusCode == 200) {
@@ -44,14 +44,32 @@ class ApiClient {
     var client = http.Client();
     var url = Uri.parse(Config.urlBase + 'api/comic/dstruyen/$type/$page');
     TruyenResponse truyenResponse = TruyenResponse(
-        errorCode: Config.ErrorCodeCallAPIFail,
-        errorMsg: Config.MsgCallAPIFail);
+        errorCode: Config.errorCodeCallAPIFail,
+        errorMsg: Config.msgCallAPIFail);
     try {
       var response = await client.get(url);
       if (response.statusCode == 200) {
         var jsonString = response.body;
         var jsonMap = json.decode(jsonString);
         truyenResponse = TruyenResponse.fromJson(jsonMap);
+      }
+    } catch (e) {}
+    return truyenResponse;
+  }
+
+  Future<TruyenDetailResponse> getDetailTruyen(String urlTruyen) async {
+    var client = http.Client();
+    var url =
+        Uri.parse(Config.urlBase + 'api/comic/detail?urlTruyen=$urlTruyen');
+    TruyenDetailResponse truyenResponse = TruyenDetailResponse(
+        errorCode: Config.errorCodeCallAPIFail,
+        errorMsg: Config.msgCallAPIFail);
+    try {
+      var response = await client.get(url);
+      if (response.statusCode == 200) {
+        var jsonString = response.body;
+        var jsonMap = json.decode(jsonString);
+        truyenResponse = TruyenDetailResponse.fromJson(jsonMap);
       }
     } catch (e) {}
     return truyenResponse;

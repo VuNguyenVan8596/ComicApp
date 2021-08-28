@@ -2,7 +2,6 @@ import 'package:CoraEnglish/models/top_truyen_model.dart';
 import 'package:CoraEnglish/models/truyen_model.dart';
 import 'package:CoraEnglish/services/apiclient.dart';
 import 'package:flutter/material.dart';
-
 import 'item_truyen_doc_nhieu_widget.dart';
 
 class TruyenDocNhieuWidget extends StatefulWidget {
@@ -16,13 +15,32 @@ class TruyenDocNhieuState extends State {
     new TopTruyenModel(name: "Top Tuần", value: 12),
     new TopTruyenModel(name: "Top Ngày", value: 13)
   ];
-  Future<TruyenResponse> _truyenResponse;
+
+  bool isLoading = true;
+  List<TruyenModel> lstTruyen = [];
 
   @override
   void initState() {
     super.initState();
     topTruyenSelected = _topTruyenModels[0];
-    _truyenResponse = ApiClient().getTruyenWithType(topTruyenSelected.value, 1);
+    ApiClient().getTruyenWithType(topTruyenSelected.value, 1).then((value) {
+      setState(() {
+        isLoading = false;
+        lstTruyen = value.data;
+      });
+    });
+  }
+
+  void onChangeDropdownTop(TopTruyenModel _truyenModel) {
+    setState(() {
+      isLoading = true;
+    });
+    ApiClient().getTruyenWithType(_truyenModel.value, 1).then((value) {
+      setState(() {
+        isLoading = false;
+        lstTruyen = value.data;
+      });
+    });
   }
 
   @override
@@ -42,9 +60,7 @@ class TruyenDocNhieuState extends State {
                   ),
                   DropdownButton<TopTruyenModel>(
                     value: topTruyenSelected,
-                    //elevation: 5,
                     style: TextStyle(color: Colors.black),
-
                     items: _topTruyenModels
                         .map<DropdownMenuItem<TopTruyenModel>>(
                             (TopTruyenModel value) {
@@ -64,8 +80,7 @@ class TruyenDocNhieuState extends State {
                       setState(() {
                         if (topTruyenSelected.value != value.value) {
                           topTruyenSelected = value;
-                          _truyenResponse = ApiClient()
-                              .getTruyenWithType(topTruyenSelected.value, 1);
+                          onChangeDropdownTop(topTruyenSelected);
                         }
                       });
                     },
@@ -77,31 +92,23 @@ class TruyenDocNhieuState extends State {
             decoration: BoxDecoration(
                 color: Colors.white, border: Border.all(color: Colors.grey)),
             child: Center(
-              child: FutureBuilder<TruyenResponse>(
-                  builder: (context, snapshot) {
-                    if (snapshot.hasData) {
-                      return ListView.separated(
-                          physics: NeverScrollableScrollPhysics(),
-                          separatorBuilder: (context, index) {
-                            return Divider(
-                              height: 2,
-                              color: Colors.grey,
-                            );
-                          },
-                          itemCount: snapshot.data.data.length > 7
-                              ? 7
-                              : snapshot.data.data.length,
-                          itemBuilder: (context, index) {
-                            return ItemTruyenDocNhieuWidget(
-                              index: index,
-                              truyenModel: snapshot.data.data[index],
-                            );
-                          });
-                    }
-                    return CircularProgressIndicator();
-                  },
-                  future: _truyenResponse),
-            ),
+                child: !isLoading
+                    ? ListView.separated(
+                        physics: NeverScrollableScrollPhysics(),
+                        separatorBuilder: (context, index) {
+                          return Divider(
+                            height: 2,
+                            color: Colors.grey,
+                          );
+                        },
+                        itemCount: lstTruyen.length > 7 ? 7 : lstTruyen.length,
+                        itemBuilder: (context, index) {
+                          return ItemTruyenDocNhieuWidget(
+                            index: index,
+                            truyenModel: lstTruyen[index],
+                          );
+                        })
+                    : CircularProgressIndicator()),
             margin: EdgeInsets.symmetric(horizontal: 10, vertical: 1),
           )
         ],
