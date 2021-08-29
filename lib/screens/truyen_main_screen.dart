@@ -1,9 +1,10 @@
 import 'dart:io';
 import 'package:CoraEnglish/models/truyen_detail.dart';
-import 'package:CoraEnglish/widgets/binh_luan_truyen_widget.dart';
+import 'package:CoraEnglish/widgets/item_binh_luan_widget.dart';
 import 'package:dotted_decoration/dotted_decoration.dart';
 import 'package:flutter/material.dart';
 import 'package:webview_flutter/webview_flutter.dart';
+import 'package:CoraEnglish/models/chapter_binh_luan.dart';
 
 class TruyenMainScreen extends StatefulWidget {
   final int indexCurrent;
@@ -20,6 +21,8 @@ class TruyenMainState extends State {
   int indexCurrent = 0;
   ChapterModel _chapterCurrent;
   TruyenDetail truyenDetail;
+
+  var blsChaCon = binhLuanConverts(binhLuanAll);
 
   TruyenMainState({@required this.indexCurrent, this.truyenDetail});
 
@@ -41,23 +44,21 @@ class TruyenMainState extends State {
   //op: - => Pre
   //op: + => Next
   void nextChapter(String op) {
-    if (op == '+') {
+    if (op == '-') {
       //Thông báo là chưa có tập mới
-      if (indexCurrent == truyenDetail.chapters.length - 1) {
+      if (indexCurrent == 0) {
         ScaffoldMessenger.of(context).showSnackBar(SnackBar(
           content: Text("Hiện chưa có chap mới."),
         ));
         return;
       }
-      //indexCurrent += 1;
       ChapterModel cp = truyenDetail.chapters.elementAt(indexCurrent + 1);
       onChangeChapterTruyen(cp);
       return;
     } else {
-      if (indexCurrent == 0) {
+      if (indexCurrent == truyenDetail.chapters.length - 1) {
         return;
       }
-      //indexCurrent -= 1;
       ChapterModel cp = truyenDetail.chapters.elementAt(indexCurrent - 1);
       onChangeChapterTruyen(cp);
       return;
@@ -71,7 +72,6 @@ class TruyenMainState extends State {
 
     setState(() {
       _chapterCurrent = value;
-      //urlCurrent = HOST + value.url;
       isLoading = true;
       _myController.loadUrl(_chapterCurrent.urlChapter);
       indexCurrent = truyenDetail.chapters.indexOf(value);
@@ -93,11 +93,49 @@ class TruyenMainState extends State {
         actions: [
           IconButton(
               onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => BinhLuanTruyenWidget()),
-                );
+                // Navigator.push(
+                //   context,
+                //   MaterialPageRoute(
+                //       builder: (context) => BinhLuanTruyenWidget()),
+                // );
+                showModalBottomSheet(
+                    context: context,
+                    isScrollControlled: true,
+                    builder: (context) {
+                      return Container(
+                        width: MediaQuery.of(context).size.width * 0.9,
+                        height: MediaQuery.of(context).size.height -
+                            MediaQuery.of(context).padding.top -
+                            AppBar().preferredSize.height -
+                            25,
+                        padding: EdgeInsets.only(
+                            left: 5, right: 5, top: 5, bottom: 5),
+                        child: ListView.separated(
+                          //controller: _scrollController,
+                          separatorBuilder: (context, index) {
+                            return SizedBox(
+                              height: 10,
+                            );
+                          },
+                          itemBuilder: (context, index) {
+                            return blsChaCon[index].idParrent == 0
+                                ? ItemBinhLuanWidget(blsChaCon[index])
+                                : Row(children: [
+                                    Expanded(
+                                      child: Container(),
+                                      flex: 2,
+                                    ),
+                                    Expanded(
+                                      child:
+                                          ItemBinhLuanWidget(blsChaCon[index]),
+                                      flex: 10,
+                                    )
+                                  ]);
+                          },
+                          itemCount: blsChaCon.length,
+                        ),
+                      );
+                    });
               },
               icon: Icon(Icons.comment))
         ],
@@ -117,7 +155,7 @@ class TruyenMainState extends State {
                           flex: 8,
                           child: FlatButton(
                               onPressed: () {
-                                nextChapter('-');
+                                nextChapter('+');
                               },
                               child: Container(
                                 height: 40,
@@ -155,13 +193,6 @@ class TruyenMainState extends State {
                                     child: Text(value.chapter),
                                   );
                                 }).toList(),
-                                // hint: Text(
-                                //   'Chapter 1',
-                                //   style: TextStyle(
-                                //       color: Colors.white,
-                                //       fontSize: 13,
-                                //       fontWeight: FontWeight.w600),
-                                // ),
                                 underline: Container(),
                                 onChanged: (ChapterModel value) {
                                   onChangeChapterTruyen(value);
@@ -175,7 +206,7 @@ class TruyenMainState extends State {
                           flex: 8,
                           child: FlatButton(
                               onPressed: () {
-                                nextChapter('+');
+                                nextChapter('-');
                               },
                               child: Container(
                                 height: 40,

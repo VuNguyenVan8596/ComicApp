@@ -59,7 +59,7 @@ class TruyenDetailState extends State {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(
-                              left: 10, right: 10, top: 20, bottom: 5),
+                              left: 10, right: 10, top: 10, bottom: 5),
                           child: Center(
                               child: Text(snapshot.data.data.tenTruyen,
                                   textAlign: TextAlign.center,
@@ -75,8 +75,8 @@ class TruyenDetailState extends State {
                               color: Colors.black45),
                         )),
                         Container(
-                          margin: EdgeInsets.only(top: 10),
-                          padding: EdgeInsets.only(top: 1000),
+                          margin: EdgeInsets.only(top: 10, bottom: 10),
+                          //padding: EdgeInsets.only(top: 1000),
                           width: MediaQuery.of(context).size.width * 0.5,
                           height:
                               (MediaQuery.of(context).size.width * 0.5) * 4 / 3,
@@ -115,7 +115,8 @@ class TruyenDetailState extends State {
                               ],
                             )),
                         Padding(
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.only(
+                                left: 10, right: 10, bottom: 10),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -142,7 +143,8 @@ class TruyenDetailState extends State {
                               ],
                             )),
                         Padding(
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.only(
+                                left: 10, right: 10, bottom: 10),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -169,7 +171,8 @@ class TruyenDetailState extends State {
                               ],
                             )),
                         Padding(
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.only(
+                                left: 10, right: 10, bottom: 10),
                             child: Row(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
@@ -196,7 +199,7 @@ class TruyenDetailState extends State {
                               ],
                             )),
                         Padding(
-                            padding: EdgeInsets.all(10),
+                            padding: EdgeInsets.only(left: 10, right: 10),
                             child: Row(
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceAround,
@@ -217,12 +220,12 @@ class TruyenDetailState extends State {
                                       child: Container(
                                         width:
                                             MediaQuery.of(context).size.width *
-                                                0.3,
-                                        height: 40,
+                                                0.2,
+                                        height: 30,
                                         child: Center(
                                             child: Text(
                                           'ĐỌC NGAY',
-                                          style: TextStyle(fontSize: 16),
+                                          style: TextStyle(fontSize: 12),
                                         )),
                                       ),
                                       color: Colors.green[800],
@@ -234,7 +237,12 @@ class TruyenDetailState extends State {
                                           MaterialPageRoute(
                                               builder: (context) =>
                                                   TruyenMainScreen(
-                                                    indexCurrent: 0,
+                                                    indexCurrent: snapshot
+                                                            .data
+                                                            .data
+                                                            .chapters
+                                                            .length -
+                                                        1,
                                                     truyenDetail:
                                                         snapshot.data.data,
                                                   )),
@@ -243,12 +251,12 @@ class TruyenDetailState extends State {
                                       child: Container(
                                         width:
                                             MediaQuery.of(context).size.width *
-                                                0.3,
-                                        height: 40,
+                                                0.2,
+                                        height: 30,
                                         child: Center(
                                             child: Text(
                                           'ĐỌC TIẾP',
-                                          style: TextStyle(fontSize: 16),
+                                          style: TextStyle(fontSize: 12),
                                         )),
                                       ),
                                       color: Colors.green[800],
@@ -318,7 +326,7 @@ class TruyenDetailState extends State {
                             //height : chiều cao màn hình - khoảng trên app bar - chiều cao app bar - 30 (chiều cao của box nội dung)
                             height: MediaQuery.of(context).size.height -
                                 MediaQuery.of(context).padding.top -
-                                40 -
+                                30 -
                                 AppBar().preferredSize.height,
                             child: Column(
                               children: [
